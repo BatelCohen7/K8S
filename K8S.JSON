@@ -1,0 +1,87 @@
+{
+    "diagram": {
+      "title": "EKS Kubernetes Cluster Architecture",
+      "elements": [
+        {
+          "type": "rectangle",
+          "label": "EKS Cluster",
+          "children": [
+            {
+              "type": "rectangle",
+              "label": "Namespace: clearsky",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "label": "Pod: clearsky-core-api",
+                  "connections": ["Service: clearsky-core-api-service"]
+                },
+                {
+                  "type": "rectangle",
+                  "label": "Pod: clearsky-gateway-api",
+                  "connections": ["Service: clearsky-gateway-api-service"]
+                },
+                {
+                  "type": "rectangle",
+                  "label": "Pod: clearsky-frontend",
+                  "connections": ["Service: clearsky-frontend-service"]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "label": "Namespace: dragonfly",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "label": "Pod: dragonfly-api",
+                  "connections": ["Service: dragonfly-api-service"]
+                },
+                {
+                  "type": "rectangle",
+                  "label": "Pod: dragonfly-client",
+                  "connections": ["Service: dragonfly-client-service"]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "label": "Namespace: nix",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "label": "Pod: nix-api",
+                  "connections": ["Service: nix-api-service"]
+                },
+                {
+                  "type": "rectangle",
+                  "label": "Pod: nix-frontend",
+                  "connections": ["Service: nix-frontend-service"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "rectangle",
+          "label": "RabbitMQ",
+          "connections": ["Namespace: clearsky", "Namespace: dragonfly", "Namespace: nix"]
+        },
+        {
+          "type": "rectangle",
+          "label": "PostgreSQL (RDS)",
+          "connections": ["Namespace: clearsky", "Namespace: dragonfly", "Namespace: nix"]
+        },
+        {
+          "type": "rectangle",
+          "label": "NGINX Ingress Controller",
+          "connections": ["Namespace: clearsky", "Namespace: dragonfly", "Namespace: nix"]
+        },
+        {
+          "type": "rectangle",
+          "label": "AWS Services (S3, IAM, etc.)",
+          "connections": ["Namespace: clearsky", "Namespace: dragonfly", "Namespace: nix"]
+        }
+      ]
+    }
+  }
+  
